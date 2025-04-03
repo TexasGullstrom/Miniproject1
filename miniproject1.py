@@ -29,10 +29,10 @@ delta_A=1
 beta_A=50
 beta_R=5
 
-Initial= [A,R,C,D_A,D_R,Dprime_A,Dprime_R,M_A,M_R]
+Initial= [D_A,D_R,Dprime_A,Dprime_R,M_A,A,M_R,R,C]
 
 def yprime(t,y):
-    A, R, C, D_A, D_R, Dprime_A, Dprime_R, M_A, M_R = y
+    D_A,D_R,Dprime_A,Dprime_R,M_A,A,M_R,R,C = y
     yprime=np.zeros(9)
     yprime[0] = theta_A*Dprime_A-gamma_A*D_A*A
     yprime[1] = theta_R*Dprime_R-gamma_R*D_R*A
@@ -46,7 +46,7 @@ def yprime(t,y):
     return yprime
 
 
-teval = np.linspace(0, FinalTime,1000)      # fine evaluation time samples
+teval = np.linspace(0, FinalTime,50)      # fine evaluation time samples
 sol = solve_ivp(yprime, [0,FinalTime], Initial, method = 'BDF', t_eval = teval)
 
 plt.figure(figsize = (6, 3))
@@ -55,5 +55,9 @@ plt.plot(sol.t,sol.y[7],linestyle = 'solid', color='red', label = 'Foxes')
 plt.xlabel('Time'); plt.ylabel('Number of animals')
 plt.title('Deterministic solution using BDF')
 plt.legend(loc='upper right')
+
+# Save the figure to a file
 plt.show()
+
+
 
