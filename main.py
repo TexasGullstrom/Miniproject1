@@ -78,20 +78,40 @@ if True: #SVD
     A9 = A9[:,0:400] 
     U9,S9,Vt9 = np.linalg.svd(A9) 
 
+
 U=np.concatenate((U0,U1,U2,U3,U4,U5,U6,U7,U8,U9),axis=1) 
-k=3 #Singular values used
-TestSolved=np.zeros((40000,1))
-isequal=np.zeros((0,40))
+isequal=np.zeros((10,11)) #Percentage of correctly guessed digits for each k (coloumns) and digits(rows)
 
-r=np.linalg.norm((np.eye(784) - U0[:,:int(k )]@np.transpose(U0[:,:int(k )]))@TestDig,axis=0) #first iteration of residuals for test digits 0
+for i in range(5,16):
+    k=i #Singular values used
+    TestSolved=np.zeros((40000,1))
+    r=np.linalg.norm((np.eye(784) - U0[:,:int(k)]@np.transpose(U0[:,:int(k )]))@TestDig,axis=0) #first iteration of residuals for test digits 0 to set up a matrix
+    #Matrix r is a residual matrix which looks at the residual of each test image compared to each digit. 
 
-for i in range(0,9):
-    r_i=np.linalg.norm((np.eye(784) - U[:,784*(i+1):784*(i+2)-1][:,:int(k)]@np.transpose(U[:,784*(i+1):784*(i+2)-1][:,:int(k )]))@TestDig,axis=0) #Residuals for rest digits
-    r=np.vstack((r,r_i))
+    for j in range(0,9):
+        r_i=np.linalg.norm((np.eye(784) - U[:,784*(j+1):784*(j+2)-1][:,:int(k)]@np.transpose(U[:,784*(j+1):784*(j+2)-1][:,:int(k )]))@TestDig,axis=0) #Residuals for rest digits
+        r=np.vstack((r,r_i)) #Stack unto matrix r
 
-TestSolved=np.argmin(r,axis=0)
-isequal_i= np.zeros((40000,1))
-for i in range(0,len(TestSolved)):
-    if TestSolved[i] == TestLab[:,i]:
-        isequal_i[i]=1
-isequal=np.sum(isequal_i)/40000 
+    TestSolved=np.argmin(r,axis=0) #choose digit with smallest residual
+    digit_matrix=np.zeros((10,40000)) #Correctly guessed 
+
+    for p in range(0,len(TestSolved)): #Confirm digit choice in each test
+        if TestSolved[p] == TestLab[:,p]:
+            digit_matrix[TestSolved[p],p]=1
+
+    for m in range(0,10):
+        isequal[m,k-5]=np.sum(digit_matrix[m,:])/4000 
+
+
+plt.figure ( figsize =(10 ,6) )
+x_vals = list ( range (5 , 16) )
+for i in range (10) :
+    plt . plot ( x_vals , isequal [ i,: ] , label = f" Siffra { i }" )
+plt . xlabel ( "k - varde ( index fran 0 till 10) " )
+plt . ylabel ( " Procent ratt " )
+plt . title ( " Procent ratt gissade per siffra over olika k ")
+plt . legend ()
+plt . grid ( True )
+plt . tight_layout ()
+plt . show ()
+
