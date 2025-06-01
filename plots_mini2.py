@@ -116,28 +116,56 @@ if False: # Visar den perfekta 3:an
     plt.title("Singular image u3 of the digit 3")
     plt.show()
 
-
-if True: # Visar den perfekta 8:an
+if False: # Visar den perfekta 3:an
     # siffran 3 
     # u1
-    A8_1= np.dot(U8[:,:1] * S8[:1], Vt8[:1,:])
-    D8_1 = np.reshape(A8_1[:,1], (28, 28)).T # Reshaping a vector to a matrix
+    U3_1 = U3[:,0]
+    D3_1 = np.reshape(U3_1, (28, 28)).T # Reshaping a vector to a matrix
+    plt.subplot(1,3,1)
+    plt.imshow(D3_1, cmap ="gray") # Den perfekta 3:an
+    plt.title("Singular image u1 of the digit 3")
+
+    # u2 
+
+    U3_2 = U3[:,1]
+    D3_2 = np.reshape(U3_2, (28, 28)).T # Reshaping a vector to a matrix
+    plt.subplot(1,3,2)
+    plt.imshow(D3_2, cmap ="gray") # Den perfekta 3:an
+
+
+    #u3
+
+    plt.title("Singular image u2 of the digit 3")
+    U3_3 = U3[:,2]
+    D3_3 = np.reshape(U3_3, (28, 28)).T # Reshaping a vector to a matrix
+    plt.subplot(1,3,3)
+    plt.imshow(D3_3, cmap ="gray") # Den perfekta 3:an
+    plt.title("Singular image u3 of the digit 3")
+    plt.show()
+
+
+
+
+if True: # Visar den perfekta 8:an 
+    # u1
+    U8_1 = U8[:,0]
+    D8_1 = np.reshape(U8_1, (28, 28)).T # Reshaping a vector to a matrix
     plt.subplot(1,3,1)
     plt.imshow(D8_1, cmap ="gray") # Den perfekta 8:an
     plt.title("Singular image u1 of the digit 8")
 
     
     # u2 
-    A8_2= np.dot(U8[:,:2] * S8[:2], Vt8[:2,:])
-    D8_2 = np.reshape(A8_2[:,1], (28, 28)).T # Reshaping a vector to a matrix
+    U8_2 = U8[:,1]
+    D8_2 = np.reshape(U8_2, (28, 28)).T # Reshaping a vector to a matrix
     plt.subplot(1,3,2)
     plt.imshow(D8_2, cmap ="gray") # Den perfekta 8:an
     plt.title("Singular image u2 of the digit 8")
 
 
     #u3
-    A8_3= np.dot(U8[:,:3] * S8[:3], Vt8[:3,:])
-    D8_3 = np.reshape(A8_3[:,1], (28, 28)).T # Reshaping a vector to a matrix
+    U8_3 = U8[:,2]
+    D8_3 = np.reshape(U8_3, (28, 28)).T # Reshaping a vector to a matrix
     plt.subplot(1,3,3)
     plt.imshow(D8_3, cmap ="gray") # Den perfekta 8:an
     plt.title("Singular image u3 of the digit 8")
